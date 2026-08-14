@@ -38,4 +38,4 @@ Through this project, I practiced:
 Computer Science Student | AI & Automation Enthusiast
 
 - GitHub: https://github.com/jastibalaramakrishna
-- LinkedIn: https://www.linkedin.com/in/balaramakrishna-jasti-5866636b/
+- LinkedIn: https://www.linkedin.com/in/balaramakrishna-jasti-5b866036b/
