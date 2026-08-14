@@ -1,6 +1,6 @@
 ## 📸 Workflow Screenshot
 
-![Workflow Screenshot](workflow.png)
+![Workflow Screenshot](screenshots/workflow.png)
 
 ## ⚙️ Setup Instructions
 
