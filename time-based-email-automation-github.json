@@ -1,0 +1,84 @@
+{
+  "name": "Time-Based Email Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        0
+      ],
+      "id": "8be0f14d-41fa-4b59-9e59-8a15902588c2",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date(\n  new Date().toLocaleString(\"en-US\", {\n    timeZone: \"Asia/Kolkata\"\n  })\n);\n\nconst hour = now.getHours();\n\nlet subject = \"\";\nlet message = \"\";\n\n// Morning\nif (hour === 7) {\n  subject = \"Good Morning ❤️\";\n  message = \"Good morning ❤️\\nHave a beautiful day!\";\n}\n\n// Breakfast\nelse if (hour === 9) {\n  subject = \"Breakfast Time 🍳\";\n  message = \"Hey ❤️\\nHad breakfast?\";\n}\n\n// Lunch\nelse if (hour === 13) {\n  subject = \"Lunch Time 🍴\";\n  message = \"Did you eat lunch? ❤️\";\n}\n\n// Snacks\nelse if (hour === 16) {\n  subject = \"Snacks Time ☕\";\n  message = \"Had snacks? 😄\";\n}\n\n// Evening\nelse if (hour === 18) {\n  subject = \"Evening Check 🌇\";\n  message = \"What are you doing now? ❤️\";\n}\n\n// Dinner\nelse if (hour === 21) {\n  subject = \"Dinner Time 🍽️\";\n  message = \"Had dinner? Take care ❤️\";\n}\n\n// Good Night\nelse if (hour === 23) {\n  subject = \"Good Night 🌙\";\n  message = \"Good night ❤️\\nSleep well and sweet dreams!\";\n}\n\n// Stop workflow if current hour doesn't match\nif (message === \"\") {\n  return [];\n}\n\n// Return data to Gmail node\nreturn [\n  {\n    json: {\n      subject,\n      message,\n      hour\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        64,
+        0
+      ],
+      "id": "c8ab3fe6-4b86-4fd3-b91d-3738fdd6b88c",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sendTo": "YOUR_EMAIL@example.com",
+        "subject": "={{$json.subject}}",
+        "message": "={{$json.message}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        0
+      ],
+      "id": "7d684dd9-0c32-4c68-8dd5-1e85f31eb170",
+      "name": "Send a message"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "tags": []
+}
